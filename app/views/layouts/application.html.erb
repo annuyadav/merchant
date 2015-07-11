@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Eros Merchants</title>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<!-- HEADER -->
+<%= render(partial: 'common/header') %>
+
+<div id="wrapper">
+
+  <%= render partial: 'common/sorting_options' %>
+
+  <!-- SIDEBAR -->
+  <%= render partial: 'common/sidebar' %>
+
+  <!--Body content-->
+  <div id="content">
+      <%= yield %>
+    <!-- End contentwrapper -->
+  </div>
+  <div class="clearfix"></div>
+  <!--End #content -->
+
+</div>
+
+</body>
+</html>

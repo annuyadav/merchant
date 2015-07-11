@@ -1,0 +1,22 @@
+<li class="menu-item dropdown">
+  <a href="javascript:void(0);" class="dropdown-toggle menu-item" data-toggle="dropdown" aria-expanded="false">
+    <span aria-hidden="true" class="glyphicon glyphicon-bell"></span>
+    <span class="notification">3</span>
+  </a>
+  <ul class="dropdown-menu">
+    <li class="menu">
+      <ul>
+        <li class="header">
+          <strong>3 Notifications</strong>
+
+          <div class="clearfix"></div>
+        </li>
+        <% 3.times do |i| %>
+            <li>
+              <%= link_to "Notification #{i}", 'javascript:void(0)' %>
+            </li>
+        <% end %>
+      </ul>
+    </li>
+  </ul>
+</li>

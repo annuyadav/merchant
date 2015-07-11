@@ -1,0 +1,31 @@
+<%= form_for :merchant, url: welcome_index_path, remote: true, html: {class: 'navbar-form', id: 'search_form'} do |f| %>
+    <div class="input-group">
+      <%= f.text_field :search, class: 'form-control', placeholder: 'Search' %>
+      <%= f.hidden_field :filters %>
+      <div class="input-group-btn">
+        <button class="btn btn-primary btn-search" type="submit">
+          <span aria-hidden="true" class="glyphicon glyphicon-search"></span>
+        </button>
+      </div>
+    </div>
+<% end %>
+
+<script>
+    $(function () {
+        var availableNames = <%== [Merchant.pluck(:name), Specialization.pluck(:name)].flatten.uniq.to_json %>;
+        $("#merchant_search").autocomplete({
+            minLength: 1,
+            source: availableNames,
+            select: function (event, ui) {
+                $('#merchant_search').val(ui.item.label);
+                $(this).parents('form').submit();
+            }
+        });
+    });
+
+    $("#search_form").submit(function (e) {
+        e.preventDefault();
+        fetch_search_query_data();
+        return false;
+    });
+</script>

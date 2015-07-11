@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  start_time: 2015-06-27 17:41:47
+  end_time: 2015-06-27 17:41:47
+  status: 1
+  merchant_id: 1
+
+two:
+  start_time: 2015-06-27 17:41:47
+  end_time: 2015-06-27 17:41:47
+  status: 1
+  merchant_id: 1

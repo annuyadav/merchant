@@ -1,0 +1,34 @@
+<div id="sorting">
+  <span id="result_count" class="result_count">
+    2 merchants found
+  </span>
+
+  <div class="sorting-options">
+    <%= form_for :merchant, url: welcome_index_path, html: {id: 'merchant_sorting_form', class: 'sort_form'} do |f| %>
+        <ul>
+          <li><%= f.radio_button :avg_rating, '1', class: 'sort_radio' %>
+            <%= f.label :avg_rating_1, 'Rating' %></li>
+          <li><%= f.radio_button :price, '1', class: 'sort_radio' %>
+            <%= f.label :price_1, 'Price Up' %></li>
+          <li> <%= f.radio_button :price, '0', class: 'sort_radio' %>
+            <%= f.label :price_0, 'Price Down' %></li>
+          <li> <%= f.radio_button :session_time, '1', class: 'sort_radio' %>
+            <%= f.label :session_time_1, 'Session Up' %></li>
+          <li> <%= f.radio_button :session_time, '0', class: 'sort_radio' %>
+            <%= f.label :session_time_0, 'Session Down' %></li>
+        </ul>
+    <% end %>
+  </div>
+  <div class="clearfix"></div>
+</div>
+
+<script>
+    $('#merchant_sorting_form input').on('change', function () {
+        $(this).parents('form').submit();
+    });
+
+    $("#merchant_sorting_form").submit(function (e) {
+        e.preventDefault();
+        fetch_search_query_data($('#merchant_sorting_form').serializeJSON());
+    });
+</script>

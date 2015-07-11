@@ -1,0 +1,103 @@
+<!--Sidebar content-->
+<div id="sidebar">
+
+  <%= form_for :merchant, url: welcome_index_path, html: {id: 'merchant_search_filters'} do |f| %>
+      <%= f.fields_for :search_filters do |s_o_f| %>
+          <ul>
+            <li>
+              <h3>Specialization</h3>
+              <ul class="sub">
+                <% Specialization.all.each do |specialization| %>
+                    <li>
+                      <%= s_o_f.check_box(:specializations_id, {:multiple => true}, specialization.id, nil) %> <%= specialization.name %>
+                    </li>
+                <% end %>
+              </ul>
+            </li>
+      <% end %>
+      <%= f.fields_for :range_filters do |s_o_f| %>
+          <li>
+            <h3>Price per section</h3>
+
+            <div id="price-slider" class="slider"></div>
+            <%= s_o_f.hidden_field :price %>
+          </li>
+      <% end %>
+      <%= f.fields_for :search_filters do |s_o_f| %>
+          <li>
+            <h3>Ratings</h3>
+
+            <div class="rating">
+              <% [1, 2, 3, 4, 5].each do |rating| %>
+                  <span>
+                    <%= s_o_f.check_box(:avg_rating, {:multiple => true}, rating, nil) %> <%= rating %>
+                  </span>
+              <% end %>
+            </div>
+          </li>
+      <% end %>
+      <%= f.fields_for :range_filters do |s_o_f| %>
+          <li>
+            <h3>Session Length (min)</h3>
+
+            <div id="session-slider" class="slider"></div>
+            <%= s_o_f.hidden_field :session_time %>
+          </li>
+      <% end %>
+      <%= f.fields_for :search_filters do |s_o_f| %>
+          <li>
+            <h3>Gender </h3>
+            <ul class="sub">
+              <% Merchant::GENDER.each do |gender_key, gender_value| %>
+                  <li><%= s_o_f.check_box(:gender, {:multiple => true}, gender_key, nil) %> <%= gender_value %></li>
+              <% end %>
+            </ul>
+          </li>
+
+          <li>
+            <h3>Availability </h3>
+            <ul class="sub">
+              <% Merchant::AVAILABILITY.each do |availability_key, availability_value| %>
+                  <li> <%= s_o_f.check_box(:availabilities, {:multiple => true}, availability_key, nil) %> <%= availability_value %></li>
+              <% end %>
+            </ul>
+          </li>
+          </ul>
+
+      <% end %>
+      <%= f.submit %>
+  <% end %>
+</div>
+<!--End #sidebar -->
+
+<script>
+    function adjust_slider(element, effected_element, max) {
+        element.slider({
+            range: true,
+            min: 10,
+            max: max,
+            values: [0, 0],
+            step: 10,
+            slide: function (event, ui) {
+                effected_element.val(ui.values);
+                $(this).parents('form').submit();
+            }
+        });
+
+        element.find('.ui-slider-tick-mark').remove();
+        for (var i = 0; i < max; i += 10) {
+            $('<span class="ui-slider-tick-mark">' + (i + 10) + '</span>').css('left', (((element.width() / (max - 10)) * i) - 7) + 'px').appendTo(element);
+        }
+    }
+
+    adjust_slider($("#price-slider"), $("#merchant_range_filters_price"), <%= Merchant.maximum(:price) || 100 %>);
+    adjust_slider($('#session-slider'), $("#merchant_range_filters_session_time"), <%= Merchant.maximum(:session_time) || 100 %>);
+
+    $("#merchant_search_filters").submit(function (e) {
+        e.preventDefault();
+        fetch_search_query_data();
+    });
+    $('#merchant_search_filters input').on('change', function () {
+        $(this).parents('form').submit();
+    })
+</script>
