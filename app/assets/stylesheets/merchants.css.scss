@@ -91,7 +91,12 @@
     }
   }
 }
-
+.no_merchant{
+  font-size: 19px;
+  font-weight: 600;
+  text-align: center;
+  color: #4e4e4e;
+}
 
   @media(max-width: 969px) {
     .merchant_detail_container {

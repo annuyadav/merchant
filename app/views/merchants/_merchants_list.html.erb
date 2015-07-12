@@ -1,7 +1,10 @@
 <div id="merchants_list">
   <% merchants.each do |merchant| %>
-
       <%= render partial: 'merchants/merchant_snippet', locals: {merchant: merchant} %>
-
+  <% end %>
+  <% unless merchants.present? %>
+      <div class="merchant_detail_container no_merchant">
+      Merchants not available
+      </div>
   <% end %>
 </div>
