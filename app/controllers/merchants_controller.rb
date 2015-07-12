@@ -3,7 +3,6 @@ class MerchantsController < ApplicationController
   before_action :fetch_merchant, only: [:available_slots]
 
   def index
-
     if params[:merchant].present?
       _query_string = search_params[:search]
 
@@ -85,7 +84,6 @@ class MerchantsController < ApplicationController
                                      filters: [
                                          search_filters: [
                                              specializations_id: [],
-                                             avg_rating: [],
                                              gender: [],
                                              availabilities: []
                                          ],

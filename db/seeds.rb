@@ -119,3 +119,6 @@ m9.appointments.create(start_time: (Time.now+15.days).change(hour: 9, minute: 30
 
 m9.appointments.create(start_time: (Time.now+20.days).change(hour: 14, minute: 00), end_time: (Time.now+20.days).change(hour: 14, minute: 30))
 m10.appointments.create(start_time: (Time.now+9.days).change(hour: 12, minute: 50), end_time: (Time.now+9.days).change(hour: 13, minute: 40))
+
+
+Merchant.import

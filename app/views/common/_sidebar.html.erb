@@ -1,6 +1,5 @@
 <!--Sidebar content-->
 <div id="sidebar">
-
   <%= form_for :merchant, url: merchants_path, method: :get, html: {id: 'merchant_search_filters'} do |f| %>
       <%= f.fields_for :search_filters do |s_o_f| %>
           <ul>
@@ -55,7 +54,6 @@
             </ul>
           </li>
           </ul>
-
       <% end %>
   <% end %>
 </div>
