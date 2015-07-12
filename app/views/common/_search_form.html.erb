@@ -1,4 +1,4 @@
-<%= form_for :merchant, url: welcome_index_path, remote: true, html: {class: 'navbar-form', id: 'search_form'} do |f| %>
+<%= form_for :merchant, url: merchants_path, method: :get, remote: true, html: {class: 'navbar-form', id: 'search_form'} do |f| %>
     <div class="input-group">
       <%= f.text_field :search, class: 'form-control', placeholder: 'Search' %>
       <%= f.hidden_field :filters %>

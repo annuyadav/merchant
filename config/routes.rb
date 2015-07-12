@@ -4,8 +4,14 @@ ErosMerchants::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-   root 'welcome#index'
-   post 'welcome/index' => 'welcome#index'
+
+  root 'merchants#index'
+
+  resources :merchants, only: [:index] do
+    member do
+      get :available_slots
+    end
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -41,7 +47,7 @@ ErosMerchants::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'

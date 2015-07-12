@@ -1,7 +1,7 @@
 <!--Sidebar content-->
 <div id="sidebar">
 
-  <%= form_for :merchant, url: welcome_index_path, html: {id: 'merchant_search_filters'} do |f| %>
+  <%= form_for :merchant, url: merchants_path, method: :get, html: {id: 'merchant_search_filters'} do |f| %>
       <%= f.fields_for :search_filters do |s_o_f| %>
           <ul>
             <li>
@@ -22,21 +22,13 @@
             <div id="price-slider" class="slider"></div>
             <%= s_o_f.hidden_field :price %>
           </li>
-      <% end %>
-      <%= f.fields_for :search_filters do |s_o_f| %>
+
           <li>
             <h3>Ratings</h3>
 
-            <div class="rating">
-              <% [1, 2, 3, 4, 5].each do |rating| %>
-                  <span>
-                    <%= s_o_f.check_box(:avg_rating, {:multiple => true}, rating, nil) %> <%= rating %>
-                  </span>
-              <% end %>
-            </div>
+            <div id="avg_rating-slider" class="slider"></div>
+            <%= s_o_f.hidden_field :avg_rating %>
           </li>
-      <% end %>
-      <%= f.fields_for :range_filters do |s_o_f| %>
           <li>
             <h3>Session Length (min)</h3>
 
@@ -65,33 +57,37 @@
           </ul>
 
       <% end %>
-      <%= f.submit %>
   <% end %>
 </div>
 <!--End #sidebar -->
 
 <script>
-    function adjust_slider(element, effected_element, max) {
+    function adjust_slider(element, effected_element, max, min, step) {
+        step = step || 10;
         element.slider({
             range: true,
-            min: 10,
+            min: min || 10,
             max: max,
             values: [0, 0],
-            step: 10,
+            step: step,
             slide: function (event, ui) {
                 effected_element.val(ui.values);
                 $(this).parents('form').submit();
             }
         });
 
+        var min = element.slider("option", "min");
+        var _tick_spacing = element.width() / (max - min);
+
         element.find('.ui-slider-tick-mark').remove();
-        for (var i = 0; i < max; i += 10) {
-            $('<span class="ui-slider-tick-mark">' + (i + 10) + '</span>').css('left', (((element.width() / (max - 10)) * i) - 7) + 'px').appendTo(element);
+        for (var i = 0; i < max; i += step) {
+            $('<span class="ui-slider-tick-mark">' + (i + min) + '</span>').css('left', ((_tick_spacing * i) - 7) + 'px').appendTo(element);
         }
     }
 
     adjust_slider($("#price-slider"), $("#merchant_range_filters_price"), <%= Merchant.maximum(:price) || 100 %>);
     adjust_slider($('#session-slider'), $("#merchant_range_filters_session_time"), <%= Merchant.maximum(:session_time) || 100 %>);
+    adjust_slider($('#avg_rating-slider'), $("#merchant_range_filters_avg_rating"), 5, 1, 1);
 
     $("#merchant_search_filters").submit(function (e) {
         e.preventDefault();

@@ -1,0 +1,56 @@
+<div class="merchant_detail_container">
+  <div class="merchant_details">
+    <%= image_tag(merchant.photo_url, class: 'merchant_pic') %>
+    <div class="merchant_name"><%= merchant.name %></div>
+
+    <div class="merchant_rating">
+      <span><%= merchant.avg_rating %></span>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+
+  <div class="time_slots">
+    <div class="left">
+      <span id="previous_day_<%= merchant.id %>" aria-hidden="true" class="glyphicon glyphicon-menu-left left"></span>
+
+      <div id="merchant_<%= merchant.id %>_slots_first_day" class="slots">
+        <h3 class="day"><%= Date.today.strftime("%a, #{Date.today.day.ordinalize} %b") %></h3>
+        <ul>
+          <% merchant.availability_slots(Date.today).collect { |slot| slot[:start_time].strftime('%H:%M') }[0, 3].each do |slot| %>
+              <li><%= slot %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="left">
+      <span id="next_day_<%= merchant.id %>" aria-hidden="true" class="glyphicon glyphicon-menu-right right"></span>
+
+      <div id="merchant_<%= merchant.id %>_slots_second_day" class="slots">
+        <% _day = Date.today + 1.day %>
+        <h3 class="day"><%= _day.strftime("%a, #{_day.day.ordinalize} %b") %></h3>
+        <ul>
+          <% merchant.availability_slots(_day).collect { |slot| slot[:start_time].strftime('%H:%M') }[0, 3].each do |slot| %>
+              <li><%= slot %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <button class="btn btn-primary btn-search" type="button">Show more times</button>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<script>
+    var merchant_<%= merchant.id %>_first_day = new Date();
+    var merchant_<%= merchant.id %>_second_day = new Date();
+    merchant_<%= merchant.id %>_second_day.setDate(merchant_<%= merchant.id %>_first_day.getDate() + 1);
+
+    $('#previous_day_<%= merchant.id %>').click(function () {
+        get_day([merchant_<%= merchant.id %>_first_day, merchant_<%= merchant.id %>_second_day], -1);
+        update_slots(merchant_<%= merchant.id %>_first_day, merchant_<%= merchant.id %>_second_day, '<%= available_slots_merchant_path(merchant)%>', '<%= merchant.id %>')
+    });
+    $('#next_day_<%= merchant.id %>').click(function () {
+        get_day([merchant_<%= merchant.id %>_first_day, merchant_<%= merchant.id %>_second_day], 1);
+        update_slots(merchant_<%= merchant.id %>_first_day, merchant_<%= merchant.id %>_second_day, '<%= available_slots_merchant_path(merchant)%>', '<%= merchant.id%>')
+    });
+</script>

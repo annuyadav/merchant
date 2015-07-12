@@ -1,7 +1,3 @@
-// Place all the styles related to the welcome controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
 body {
   background: #eee;
 }
@@ -154,12 +150,6 @@ body {
   ==========================================================================
 */
 
-/*
-  ==========================================================================
-    Wrapper Start
-  ==========================================================================
-*/
-
 #wrapper {
   min-height: 100%;
   padding: 0 40px;
@@ -262,6 +252,16 @@ body {
     }
   }
 
+  @media (max-width: 969px) {
+    #sidebar{
+      ul{
+        h3{
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
   /* ------------  Side bar end ----------------  */
 
   /* ------------  Sorting start ----------------  */
@@ -288,10 +288,10 @@ body {
             margin-right: 10px;
             position: relative;
             font-size: 13px;
-            input{
+            input {
               display: none;
             }
-            label{
+            label {
               font-weight: 100;
               cursor: pointer;
             }
@@ -300,7 +300,6 @@ body {
       }
     }
   }
-
   /* ------------  Sorting end ------------------  */
 
   /* ------------  Main content start ------------------  */
@@ -308,100 +307,12 @@ body {
     float: right;
     width: 80%;
     min-height: 100%;
-    padding: 5px 25px 25px;
-
-    .merchant_detail_container {
-      padding: 15px 10px;
-      background: #fff;
-      margin: 10px;
-      .merchant_details {
-        padding: 10px 15px;
-        float: left;
-        width: 70%;
-        img.merchant_pic {
-          width: 25%;
-          display: inline-block;
-        }
-        div {
-          &.merchant_name {
-            font-size: 17px;
-            position: absolute;
-            display: inline-block;
-            padding: 0 10px;
-          }
-          &.merchant_rating {
-            float: right;
-            font-size: 16px;
-            span {
-              border: 2px solid #e37102;
-              padding: 5px;
-              color: #e37102;
-            }
-          }
-        }
-      }
-
-      .time_slots {
-        height: 100%;
-        float: right;
-        width: 30%;
-        border-left: 2px solid #ebebeb;
-        padding: 10px;
-        color: #797979;
-        span.glyphicon {
-          color: #20baba;
-        }
-        h3 {
-          color: #545454;
-          display: inline-block;
-          font-size: 14px;
-          font-weight: 600;
-          margin: 0;
-        }
-        div {
-          width: 50%;
-          &.left {
-            float: left;
-          }
-          &.right {
-            float: right;
-          }
-          ul {
-            list-style: outside none none;
-            padding: 0;
-            li {
-              margin: 10px;
-              text-align: center;
-              display: block;
-            }
-          }
-        }
-        button {
-          background: #20baba;
-          border: 1px solid #20baba;
-          margin: 0 5%;
-          position: relative;
-          width: 90%;
-        }
-      }
-    }
+    padding: 5px 0 0 25px;
   }
   /* ------------  Main content end ------------------  */
 }
 
-@media(max-width: 767px) {
-  #wrapper {
-    padding: 0 20px;
-  }
-}
-
-@media(max-width: 767px) {
-  #wrapper {
-    padding: 0 20px;
-  }
-}
-
-@media(max-width: 767px) {
+@media(max-width: 969px) {
   #wrapper {
     padding: 0 20px;
   }

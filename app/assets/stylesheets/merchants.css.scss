@@ -1,0 +1,105 @@
+// Place all the styles related to the merchants controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.merchant_detail_container {
+  padding: 15px 10px;
+  background: #fff;
+  margin: 0 0 10px;
+  .merchant_details {
+    padding: 10px 15px;
+    float: left;
+    width: 70%;
+    img.merchant_pic {
+      width: 25%;
+      display: inline-block;
+    }
+    div {
+      &.merchant_name {
+        font-size: 17px;
+        position: absolute;
+        display: inline-block;
+        padding: 0 10px;
+      }
+      &.merchant_rating {
+        float: right;
+        font-size: 16px;
+        span {
+          border: 2px solid #e37102;
+          padding: 5px;
+          color: #e37102;
+        }
+      }
+    }
+  }
+
+  .time_slots {
+    height: 100%;
+    float: right;
+    width: 30%;
+    border-left: 2px solid #ebebeb;
+    padding: 10px;
+    color: #797979;
+    span.glyphicon {
+      color: #20baba;
+      margin: 5px;
+      cursor: pointer;
+      &.left {
+        float: left;
+      }
+      &.right {
+        float: right;
+      }
+    }
+    h3 {
+      color: #545454;
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0;
+      text-align: center;
+    }
+    div {
+      width: 50%;
+      min-height: 130px;
+      &.left {
+        float: left;
+      }
+      &.right {
+        float: right;
+      }
+      ul {
+        list-style: outside none none;
+        padding: 0;
+        li {
+          margin: 10px;
+          text-align: center;
+          display: block;
+        }
+      }
+      &.slots {
+        display: inline-block;
+        width: 70%;
+      }
+    }
+    button {
+      background: #20baba;
+      border: 1px solid #20baba;
+      margin: 0 5%;
+      position: relative;
+      width: 90%;
+    }
+  }
+}
+
+
+  @media(max-width: 969px) {
+    .merchant_detail_container {
+      .merchant_details{
+        width: 60%;
+      }
+      .time_slots{
+        width: 40%;
+      }
+    }
+  }

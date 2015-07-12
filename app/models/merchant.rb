@@ -29,7 +29,7 @@ class Merchant < ActiveRecord::Base
   after_photofy :profile_photo, :photo, Proc.new { |img| img.resize_to_fill(150, 150) }
 
   #--- search indexes --------------------------------------------
-  def as_indexed_json()
+  def as_indexed_json(options={})
     as_json(
         only: [:name, :about, :price, :gender, :avg_rating, :session_time],
         methods: [:availabilities, :specializations_id],
