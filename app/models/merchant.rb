@@ -12,6 +12,21 @@ class Merchant < ActiveRecord::Base
   AVAILABILITY = {1 => 'now', 2 => 'morning', 3 => 'afternoon', 4 => 'evening', 5 => 'night',
                   6 => 'today', 7 => 'tomorrow', 8 => 'this week'}
 
+  TODAY_TIME_RANGE = "#{Time.now.midnight}, #{Time.now.end_of_day}"
+  TOMORROW_TIME_RANGE = "#{Time.now.midnight + 1.day}, #{Time.now.end_of_day + 1.day}"
+  WEEK_TIME_RANGE = "#{Time.now.beginning_of_week}, #{Time.now.end_of_week}"
+
+
+  AVAILABILITY_RANGE = {1 => {s_t: TODAY_TIME_RANGE, e_t: "#{Time.now}, #{Time.now.end_of_day}"},
+                        2 => {s_t: TODAY_TIME_RANGE, e_t: "#{Time.now.change(hour: 7, minute: 0)}, #{Time.now.end_of_day}"},
+                        3 => {s_t: TODAY_TIME_RANGE, e_t: "#{Time.now.change(hour: 12, minute: 0)}, #{Time.now.end_of_day}"},
+                        4 => {s_t: TODAY_TIME_RANGE, e_t: "#{Time.now.change(hour: 16, minute: 0)}, #{Time.now.end_of_day}"},
+                        5 => {s_t: TODAY_TIME_RANGE, e_t: "#{Time.now.change(hour: 19, minute: 0)}, #{Time.now.end_of_day}"},
+                        6 => {s_t: TODAY_TIME_RANGE, e_t: TODAY_TIME_RANGE},
+                        7 => {s_t: TOMORROW_TIME_RANGE, e_t: TOMORROW_TIME_RANGE},
+                        8 => {s_t: WEEK_TIME_RANGE, e_t: WEEK_TIME_RANGE}
+  }
+
   #---Associations -----------------------------------------------
   has_many :openings, dependent: :destroy
   has_many :appointments, dependent: :destroy
@@ -33,7 +48,8 @@ class Merchant < ActiveRecord::Base
     as_json(
         only: [:name, :about, :price, :gender, :avg_rating, :session_time],
         methods: [:availabilities, :specializations_id],
-        include: {specializations: {only: :name}}
+        include: {specializations: {only: :name},
+                  openings: {only: [:start_time, :end_time]}}
     )
   end
 

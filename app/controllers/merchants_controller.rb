@@ -39,7 +39,7 @@ class MerchantsController < ApplicationController
   end
 
   def fetch_filters
-    [get_range_filters, get_search_filters].flatten
+   [get_range_filters, get_search_filters, get_date_range_filters].flatten
   end
 
   def get_range_filters
@@ -56,6 +56,38 @@ class MerchantsController < ApplicationController
       }
     end
     _filters
+  end
+
+  def get_date_range_filters
+    _filters = []
+    search_params[:filters][:range_date_filters][:availabilities].each do |time_range|
+      time_range = JSON.parse(time_range, {:symbolize_names => true})
+      time_range.each do |key, value|
+        time_range[key] = time_range[key].split(',').collect { |value| value.to_datetime.utc.strftime('%Y-%m-%dT%H:%M') }
+      end
+      _filter = {and: []}
+
+      _filter[:and] << {
+          range: {
+              'openings.end_time' => {
+                  gte: time_range[:e_t].first,
+                  lte: time_range[:e_t].last
+              }
+          }
+      }
+      _filter[:and] << {
+          range: {
+              'openings.start_time' => {
+                  gte: time_range[:s_t].first,
+                  lte: time_range[:s_t].last
+              }
+          }
+      }
+      _filters << _filter
+    end if search_params[:filters][:range_date_filters]
+    _filters
+
+    _filters.present? ? {or: _filters} : []
   end
 
   def get_search_filters
@@ -85,9 +117,9 @@ class MerchantsController < ApplicationController
                                          search_filters: [
                                              specializations_id: [],
                                              gender: [],
-                                             availabilities: []
                                          ],
-                                         range_filters: [:price, :session_time, :avg_rating]
+                                         range_filters: [:price, :session_time, :avg_rating],
+                                         range_date_filters: [availabilities: []]
                                      ],
                                      sorting: [:sort
 

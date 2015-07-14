@@ -44,12 +44,13 @@
               <% end %>
             </ul>
           </li>
-
+      <% end %>
+      <%= f.fields_for :range_date_filters do |s_o_f| %>
           <li>
             <h3>Availability </h3>
             <ul class="sub">
               <% Merchant::AVAILABILITY.each do |availability_key, availability_value| %>
-                  <li> <%= s_o_f.check_box(:availabilities, {:multiple => true}, availability_key, nil) %> <%= availability_value %></li>
+                  <li> <%= s_o_f.check_box(:availabilities, {:multiple => true}, JSON.dump(Merchant::AVAILABILITY_RANGE[availability_key]), nil) %> <%= availability_value %></li>
               <% end %>
             </ul>
           </li>
